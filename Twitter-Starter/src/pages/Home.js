@@ -17,6 +17,32 @@ const Home = () => {
   const [theFile, setTheFile] = useState();
   const [tweet, setTweet] = useState();
 
+  async function saveTweet() {
+ 
+   if(!tweet) return;
+   
+   // if it's the first tweet we create it (object class)
+   const Tweets = Moralis.Object.extend("Tweets");
+ 
+   const newTweet = new Tweets();
+ 
+   newTweet.set("tweetTxt", tweet);
+   newTweet.set("tweeterPfp", user.attributes.pfp);
+   newTweet.set("tweeterAcc", user.attributes.ethAddress);
+   newTweet.set("tweeterUserName", user.attributes.username);
+ 
+   if (theFile) {
+     const data = theFile;
+     const file = new Moralis.File(data.name, data);
+     await file.saveIPFS();
+     newTweet.set("tweetImg", file.ipfs());
+   }
+ 
+   await newTweet.save();
+   window.location.reload();
+ 
+}
+
   const onImageClick = () => {
    inputFile.current.click();
   };
@@ -25,6 +51,7 @@ const Home = () => {
   // afterwards we set the selected file to a temp object url so we can display it
   const changeHandler = (event) => {
     const img = event.target.files[0];
+    //set img
     setTheFile(img);
     setSelectedFile(URL.createObjectURL(img));
   };
@@ -45,6 +72,7 @@ const Home = () => {
             name="tweetTxtArea"
             value="GM World"
             type="text"
+            onChange={(e) => setTweet(e.target.value)}
             width="95%"
           ></TextArea>
           {selectedFile && (
@@ -63,7 +91,7 @@ const Home = () => {
             </div>
 
              <div className="tweetOptions">
-              <div className="tweet" /*onClick={saveTweet}*/>Tweet</div>
+              <div className="tweet" onClick={saveTweet}>Tweet</div>
                 <div className="tweet" /*onClick={maticTweet}*/ style={{ backgroundColor: "#8247e5" }}>
                   <Icon fill="#ffffff" size={20} svg="matic" />
               </div>
