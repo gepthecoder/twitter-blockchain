@@ -9,6 +9,8 @@ const App = () => {
 
   return (
     <>
+      <div className="page">
+        <div className="sideBar"> Sidebar</div>
           <div className="mainWindow">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -16,6 +18,8 @@ const App = () => {
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </div>
+        <div className="rightBar"> Rightbar</div>
+      </div>
     </>
   );
 };
