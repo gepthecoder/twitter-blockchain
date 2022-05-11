@@ -27,7 +27,10 @@ const Home = () => {
             </div>
 
              <div className="tweetOptions">
-            
+              <div className="tweet" /*onClick={saveTweet}*/>Tweet</div>
+                <div className="tweet" /*onClick={maticTweet}*/ style={{ backgroundColor: "#8247e5" }}>
+                  <Icon fill="#ffffff" size={20} svg="matic" />
+              </div>
             </div>
           </div>
         </div>
