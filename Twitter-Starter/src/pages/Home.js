@@ -4,8 +4,12 @@ import { defaultImgs } from "../defaultimgs";
 import { TextArea, Icon } from "web3uikit";
 import { useState, useRef } from "react";
 import TweetInFeed from "../components/TweetInFeed";
+import { useMoralis } from "react-moralis";
 
 const Home = () => {
+
+  const { Moralis } = useMoralis();
+  const user = Moralis.User.current();
 
   const inputFile = useRef(null);
   const [selectedFile, setSelectedFile] = useState();
@@ -28,11 +32,11 @@ const Home = () => {
   return (
     <>
     <div className="pageIdentify">Home</div>
-    
+
     <div className="mainContent">
       <div className="profileTweet">
         <img
-          src={defaultImgs[0]}
+          src={user.attributes.pfp ? user.attributes.pfp : defaultImgs[0]}
           className="profilePic"
         ></img>
         <div className="tweetBox">
