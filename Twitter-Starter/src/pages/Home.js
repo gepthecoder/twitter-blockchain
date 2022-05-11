@@ -27,6 +27,8 @@ const Home = () => {
 
   return (
     <>
+    <div className="pageIdentify">Home</div>
+    
     <div className="mainContent">
       <div className="profileTweet">
         <img
