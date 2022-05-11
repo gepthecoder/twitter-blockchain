@@ -3,6 +3,7 @@ import "./Home.css";
 import { defaultImgs } from "../defaultimgs";
 import { TextArea, Icon } from "web3uikit";
 import { useState, useRef } from "react";
+import TweetInFeed from "../components/TweetInFeed";
 
 const Home = () => {
 
@@ -64,6 +65,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <TweetInFeed profile={false}/>
     </div>
     </>
   );
