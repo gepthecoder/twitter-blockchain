@@ -4,7 +4,7 @@ import { defaultImgs } from "../defaultimgs";
 import { TextArea, Icon } from "web3uikit";
 import { useState, useRef } from "react";
 import TweetInFeed from "../components/TweetInFeed";
-import { useMoralis } from "react-moralis";
+import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
 const Home = () => {
 
@@ -16,6 +16,62 @@ const Home = () => {
 
   const [theFile, setTheFile] = useState();
   const [tweet, setTweet] = useState();
+
+  const contractProcessor = useWeb3ExecuteFunction();
+
+  async function maticTweet() {
+ 
+   if (!tweet) return;
+ 
+   let img;
+   if (theFile) {
+     const data = theFile;
+     const file = new Moralis.File(data.name, data);
+     await file.saveIPFS();
+     img = file.ipfs();
+   }else{
+     img = "No Img"
+   }
+ 
+   let options = {
+     contractAddress: "0xB1CFe59E1cdEb9144B18B1df542fdC93841D068a",
+     functionName: "addTweet",
+     abi: [{
+       "inputs": [
+         {
+           "internalType": "string",
+           "name": "tweetTxt",
+           "type": "string"
+         },
+         {
+           "internalType": "string",
+           "name": "tweetImg",
+           "type": "string"
+         }
+       ],
+       "name": "addTweet",
+       "outputs": [],
+       "stateMutability": "payable",
+       "type": "function"
+     }],
+     params: {
+       tweetTxt: tweet,
+       tweetImg: img,
+     },
+     msgValue: Moralis.Units.ETH(1),
+   }
+ 
+   await contractProcessor.fetch({
+     params: options,
+     onSuccess: () => {
+       saveTweet();
+     },
+     onError: (error) => {
+       console.log(error.data.message)
+     }
+   });
+ 
+ }
 
   async function saveTweet() {
  
@@ -92,7 +148,7 @@ const Home = () => {
 
              <div className="tweetOptions">
               <div className="tweet" onClick={saveTweet}>Tweet</div>
-                <div className="tweet" /*onClick={maticTweet}*/ style={{ backgroundColor: "#8247e5" }}>
+                <div className="tweet" onClick={maticTweet} style={{ backgroundColor: "#8247e5" }}>
                   <Icon fill="#ffffff" size={20} svg="matic" />
               </div>
             </div>
