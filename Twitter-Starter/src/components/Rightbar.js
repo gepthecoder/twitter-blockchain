@@ -47,6 +47,20 @@ const Rightbar = () => {
         labelBgColor="#141d26"
       >
       </Input>
+
+      <div className="trends">
+        News For You
+        {trends.map((e) => {
+          return(
+            <>
+              <div className="trend" onClick={() => window.open(e.link)}>
+                <img src={e.img} className="trendImg"></img>
+                <div className="trendText">{e.text}</div>  
+              </div>
+            </>
+          )
+        })}
+      </div>
     </div>
     </>
   );
