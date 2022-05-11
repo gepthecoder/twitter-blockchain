@@ -12,6 +12,9 @@ import pfp4 from "../images/pfp4.png";
 import pfp5 from "../images/pfp5.png";
 import { defaultImgs } from "../defaultimgs";
 
+import { useMoralis } from "react-moralis";
+
+
 const Settings = () => {
 
   const pfps = [pfp1, pfp2, pfp3, pfp4, pfp5];
@@ -21,6 +24,9 @@ const Settings = () => {
   const [theFile, setTheFile] = useState();
   const [username, setUsername] = useState();
   const [bio, setBio] = useState();
+
+  const { Moralis } = useMoralis();
+
 
   const onBannerClick = () => {
    inputFile.current.click();
@@ -32,6 +38,34 @@ const Settings = () => {
    setSelectedFile(URL.createObjectURL(img));
   };
 
+  const saveEdits = async () => {
+   const User = Moralis.Object.extend("_User");
+   const query = new Moralis.Query(User);
+   const myDetails = await query.first();
+ 
+   if (bio){
+     myDetails.set("bio", bio);
+   }
+ 
+   if (selectedPFP){
+     myDetails.set("pfp", selectedPFP);
+   }
+ 
+   if (username){
+     myDetails.set("username", username);
+   }
+ 
+   if (theFile) {
+     const data = theFile;
+     const file = new Moralis.File(data.name, data);
+     await file.saveIPFS();
+     myDetails.set("banner", file.ipfs());
+   }
+ 
+   await myDetails.save();
+   window.location.reload();
+  }
+
   return (
     <>
     <div className="pageIdentify">Settings</div>
@@ -41,7 +75,7 @@ const Settings = () => {
         name="NameChange"
         width="100%"
         labelBgColor="#141d26"
-        /*onChange={(e)=> setUsername(e.target.value)}*/
+        onChange={(e)=> setUsername(e.target.value)}
       />
 
       <Input
@@ -49,7 +83,7 @@ const Settings = () => {
         name="bioChange"
         width="100%"
         labelBgColor="#141d26"
-        /*onChange={(e)=> setBio(e.target.value)}*/
+        onChange={(e)=> setBio(e.target.value)}
       />
 
       <div className="pfp">
@@ -86,8 +120,8 @@ const Settings = () => {
            />
          </div>
        </div>
-       
-      <div className="save" /* onClick={() => saveEdits()} */>
+
+      <div className="save" onClick={() => saveEdits()}>
          Save
       </div>
 
