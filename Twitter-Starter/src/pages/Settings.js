@@ -2,22 +2,32 @@ import React from "react";
 import { Link } from "react-router-dom";
 import './Settings.css';
 
+import { Input } from "web3uikit";
 
 const Settings = () => {
   
 
   return (
     <>
-    <Link to="/">
-        <div>Home</div>
-      </Link>
-      <Link to="/profile">
-        <div>Profile</div>
-      </Link>
+    <div className="pageIdentify">Settings</div>
+    <div className="settingsPage">
+      <Input
+        label="Name"
+        name="NameChange"
+        width="100%"
+        labelBgColor="#141d26"
+        /*onChange={(e)=> setUsername(e.target.value)}*/
+      />
 
-      <Link to="/settings">
-        <div>Settings</div>
-      </Link>
+      <Input
+        label="Bio"
+        name="bioChange"
+        width="100%"
+        labelBgColor="#141d26"
+        /*onChange={(e)=> setBio(e.target.value)}*/
+      />
+
+    </div>
 
     </>
   );
