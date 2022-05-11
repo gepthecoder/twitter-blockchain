@@ -1,6 +1,7 @@
 import React from "react";
 import "./Home.css";
 import { defaultImgs } from "../defaultimgs";
+import { TextArea } from "web3uikit";
 
 const Home = () => {
   return (
@@ -10,8 +11,16 @@ const Home = () => {
         <img
           src={defaultImgs[0]}
           className="profilePic"
-        >
-        </img>
+        ></img>
+        <div className="tweetBox">
+          <TextArea
+            label=""
+            name="tweetTxtArea"
+            value="GM World"
+            type="text"
+            width="95%"
+          ></TextArea>
+        </div>
       </div>
     </div>
     </>
