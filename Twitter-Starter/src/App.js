@@ -4,13 +4,16 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import "./App.css";
+import Sidebar from "./components/Sidebar";
 
 const App = () => {
 
   return (
     <>
       <div className="page">
-        <div className="sideBar"> Sidebar</div>
+        <div className="sideBar">
+          <Sidebar />
+        </div>
           <div className="mainWindow">
             <Routes>
               <Route path="/" element={<Home />} />
