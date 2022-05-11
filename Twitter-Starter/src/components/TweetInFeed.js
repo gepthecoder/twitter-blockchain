@@ -44,7 +44,7 @@ const TweetInFeed = () => {
        <img src={defaultImgs[0]} className="profilePic"></img>
        <div className="completeTweet">
          <div className="who">
-           Bob
+           Gasper
            <div className="accWhen">0x42..314 · 1h</div>
          </div>
          <div className="tweetContent">
