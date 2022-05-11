@@ -1,20 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Home.css";
+import { defaultImgs } from "../defaultimgs";
 
 const Home = () => {
   return (
     <>
-      <Link to="/">
-        <div>Home</div>
-      </Link>
-      <Link to="/profile">
-        <div>Profile</div>
-      </Link>
-
-      <Link to="/settings">
-        <div>Settings</div>
-      </Link>
+    <div className="mainContent">
+      <div className="profileTweet">
+        <img
+          src={defaultImgs[0]}
+          className="profilePic"
+        >
+        </img>
+      </div>
+    </div>
     </>
   );
 };
