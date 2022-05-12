@@ -79,7 +79,7 @@ const TweetInFeed = ({profile}) => {
          </>
        );
      }).reverse()}
-    
+    // reverse mapping so the new tweets are on top
     </>
   );
 };
